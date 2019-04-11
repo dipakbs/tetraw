@@ -1,0 +1,194 @@
+#!/usr/local/bin/vmd
+# VMD script written by save_state $Revision: 1.1 $
+# VMD version: 1.8.3
+set viewplist {}
+set fixedlist {}
+material change ambient Opaque 0.000000
+material change specular Opaque 0.500000
+material change diffuse Opaque 0.650000
+material change shininess Opaque 0.534020
+material change opacity Opaque 1.000000
+material change ambient Transparent 0.000000
+material change specular Transparent 0.500000
+material change diffuse Transparent 0.650000
+material change shininess Transparent 0.534020
+material change opacity Transparent 0.300000
+# Atom selection macros
+atomselect macro at {resname ADE A THY T}
+atomselect macro acidic {resname ASP GLU}
+atomselect macro cyclic {resname HIS PHE PRO TRP TYR}
+atomselect macro acyclic {protein and not cyclic}
+atomselect macro aliphatic {resname ALA GLY ILE LEU VAL}
+atomselect macro alpha {protein and name CA}
+atomselect macro amino protein
+atomselect macro aromatic {resname HIS PHE TRP TYR}
+atomselect macro basic {resname ARG HIS LYS HSP}
+atomselect macro bonded {numbonds > 0}
+atomselect macro buried {resname ALA LEU VAL ILE PHE CYS MET TRP}
+atomselect macro cg {resname CYT C GUA G}
+atomselect macro charged {basic or acidic}
+atomselect macro hetero {not (protein or nucleic)}
+atomselect macro hydrophobic {resname ALA LEU VAL ILE PRO PHE MET TRP}
+atomselect macro small {resname ALA GLY SER}
+atomselect macro medium {resname VAL THR ASP ASN PRO CYS ASX PCA HYP}
+atomselect macro large {protein and not (small or medium)}
+atomselect macro neutral {resname VAL PHE GLN TYR HIS CYS MET TRP ASX GLX PCA HYP}
+atomselect macro polar {protein and not hydrophobic}
+atomselect macro purine {resname ADE A GUA G}
+atomselect macro pyrimidine {resname CYT C THY T URI U}
+atomselect macro surface {protein and not buried}
+atomselect macro lipid {resname DLPE DMPC GPC LPPC PALM PC PGCL POPC POPE}
+atomselect macro lipids lipid
+atomselect macro ion {resname CAL CES CLA CL MG NA K POT SOD ZN ZN2}
+atomselect macro ions ion
+atomselect macro sugar {resname AGLC}
+atomselect macro solvent {not (protein or sugar or nucleic or lipid)}
+atomselect macro carbon {name "C.*" and not ion}
+atomselect macro hydrogen {name "[0-9]?H.*"}
+atomselect macro nitrogen {name "N.*"}
+atomselect macro oxygen {name "O.*"}
+atomselect macro sulfur {name "S.*" and not ion}
+atomselect macro noh {not hydrogen}
+atomselect macro heat1 {segname IMP and resid 1 to 47}
+atomselect macro heat2 {segname IMP and resid 48 to 83}
+atomselect macro heat3 {segname IMP and resid 84 to 122}
+atomselect macro heat4 {segname IMP and resid 123 to 163}
+atomselect macro heat5 {segname IMP and resid 164 to 207}
+atomselect macro heat6 {segname IMP and resid 208 to 249}
+atomselect macro heat7 {segname IMP and resid 250 to 312}
+atomselect macro heat8 {segname IMP and resid 313 to 361}
+atomselect macro heat9 {segname IMP and resid 362 to 400}
+atomselect macro heat10 {segname IMP and resid 401 to 440}
+atomselect macro heat11 {segname IMP and resid 441 to 494}
+atomselect macro heat12 {segname IMP and resid 495 to 540}
+atomselect macro heat13 {segname IMP and resid 541 to 595}
+atomselect macro heat14 {segname IMP and resid 596 to 640}
+atomselect macro heat15 {segname IMP and resid 641 to 682}
+atomselect macro heat16 {segname IMP and resid 683 to 725}
+atomselect macro heat17 {segname IMP and resid 726 to 780}
+atomselect macro heat18 {segname IMP and resid 781 to 830}
+atomselect macro heat19 {segname IMP and resid 831 to 876}
+# Display settings
+display eyesep       0.065000
+display focallength  2.000000
+display height       6.000000
+display distance     -2.000000
+display projection   Orthographic
+display nearclip set 0.010000
+display farclip  set 10.000000
+display depthcue   off
+display cuestart   0.500000
+display cueend     10.000000
+display cuedensity 0.400000
+display cuemode    Exp2
+mol new winter-flounder-lattice.pdb type pdb waitfor all
+mol delrep 0 top
+mol representation NewCartoon 0.290000 26.000000 2.180000 0
+mol color ColorID 15
+mol selection {protein}
+mol material Opaque
+mol addrep top
+mol selupdate 0 top 0
+mol colupdate 0 top 0
+mol scaleminmax top 0 0.000000 0.000000
+mol smoothrep top 0 0
+mol drawframes top 0 {now}
+mol representation MSMS 1.500000 1.500000 0.000000 0.000000
+mol color ResType
+mol selection {protein}
+mol material Transparent
+mol addrep top
+mol selupdate 1 top 0
+mol colupdate 1 top 0
+mol scaleminmax top 1 0.000000 0.000000
+mol smoothrep top 1 0
+mol drawframes top 1 {now}
+mol representation VDW 1.000000 8.000000
+mol color Type
+mol selection {protein and resname THR}
+mol material Opaque
+mol addrep top
+mol selupdate 2 top 0
+mol colupdate 2 top 0
+mol scaleminmax top 2 0.000000 0.000000
+mol smoothrep top 2 0
+mol drawframes top 2 {now}
+mol representation CPK 1.000000 0.300000 8.000000 6.000000
+mol color Type
+mol selection {water}
+mol material Opaque
+mol addrep top
+mol selupdate 3 top 0
+mol colupdate 3 top 0
+mol scaleminmax top 3 0.000000 0.000000
+mol smoothrep top 3 0
+mol drawframes top 3 {now}
+mol representation VDW 1.000000 8.000000
+mol color ColorID 16
+mol selection {water and index 1056 318 6}
+mol material Opaque
+mol addrep top
+mol selupdate 4 top 0
+mol colupdate 4 top 0
+mol scaleminmax top 4 0.000000 0.000000
+mol smoothrep top 4 0
+mol drawframes top 4 {now}
+mol rename top winter-flounder-lattice.pdb
+set viewpoints([molinfo top]) {{{1.000000 0.000000 0.000000 1.586485} {0.000000 1.000000 0.000000 1.402464} {0.000000 0.000000 1.000000 -29.677622} {0.000000 0.000000 0.000000 1.000000}} {{-0.866430 -0.498691 0.024744 0.000000} {-0.019592 -0.015564 -0.999688 0.000000} {0.498919 -0.866644 0.003714 0.000000} {0.000000 0.000000 0.000000 1.000000}} {{0.041438 0.000000 0.000000 0.000000} {0.000000 0.041438 0.000000 0.000000} {0.000000 0.000000 0.041438 0.000000} {0.000000 0.000000 0.000000 1.000000}} {{1.000000 0.000000 0.000000 0.030000} {0.000000 1.000000 0.000000 -0.410000} {0.000000 0.000000 1.000000 0.000000} {0.000000 0.000000 0.000000 1.000000}}}
+lappend viewplist [molinfo top]
+set topmol [molinfo top]
+# done with molecule 8
+foreach v $viewplist {
+  molinfo $v set {center_matrix rotate_matrix scale_matrix global_matrix} $viewpoints($v)
+}
+foreach v $fixedlist {
+  molinfo $v set fixed 1
+}
+unset viewplist
+unset fixedlist
+mol top $topmol
+unset topmol
+proc vmdrestoremycolors {} {
+  color scale method RGB
+  color Display {FPS} white
+  color Axes {X} lime
+  color Axes {Y} lime
+  color Axes {Z} lime
+  color Axes {Origin} lime
+  color Resname {NH2} gray
+  color Chain {W} blue
+  color Chain {A} red
+  color Segname {W1} blue
+  color Segname {W2} red
+  color Segname {W3} gray
+  color Segname {1WFA} orange
+  color Segname {W} blue
+  color Molecule {0} blue
+  color Molecule {1} red
+  color Molecule {ICES-hex-dup.psf} red
+  color Molecule {2} orange
+  color Molecule {3} yellow
+  color Molecule {1WFA-lattice-20-21.pdb} orange
+  color Molecule {4} silver
+  color Molecule {5} green
+  color Molecule {ICES.psf} tan
+  color Molecule {6} pink
+  color Molecule {7} cyan
+  color Molecule {8} purple
+  color Surface {Grasp} gray
+  color Labels {Springs} orange
+  color change rgb 0 0.0 0.0 1.0
+  color change rgb 2 0.34999999404 0.34999999404 0.34999999404
+  color change rgb 3 1.0 0.5 0.0
+  color change rgb 4 1.0 1.0 0.0
+  color change rgb 5 0.5 0.5 0.20000000298
+  color change rgb 6 0.600000023842 0.600000023842 0.600000023842
+  color change rgb 7 0.0 1.0 0.0
+  color change rgb 9 0.0599999986589 0.550000011921 0.829999983311
+  color change rgb 11 0.649999976158 0.0 0.649999976158
+  color change rgb 12 0.730000019073 0.0599999986589 0.219999998808
+  color change rgb 13 0.899999976158 0.40000000596 0.699999988079
+  color change rgb 14 0.5 0.300000011921 0.0
+  color change rgb 15 0.5 0.5 0.75
+}
+vmdrestoremycolors

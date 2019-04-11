@@ -1,0 +1,2 @@
+Tetrahedral Order Parameter is -nan. 
+ 

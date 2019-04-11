@@ -1,0 +1,15 @@
+CC=gcc
+PROFFLAGS=-pg
+DEBUG=-O0 -g
+MAIN=tetrahedral
+LDFLAGS=-lm
+
+tetrahedral : tetrahedral.c
+	$(CC) $(LDFLAGS) -o $(MAIN) tetrahedral.c 
+
+profile:  tetrahedral.c
+	$(CC) $(PROFFLAGS)  $(LDFLAGS) tetrahedral.c
+debug:	tetrahedral.c
+	$(CC) $(DEBUG) $(LDFLAGS) -o $(MAIN) tetrahedral.c
+clean: 
+	rm *.o $(MAIN)

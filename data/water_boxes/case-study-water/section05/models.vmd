@@ -1,0 +1,171 @@
+#!/usr/local/bin/vmd
+# VMD script written by save_state $Revision: 1.1 $
+# VMD version: 1.8.3a25
+set viewplist {}
+set fixedlist {}
+material change ambient Opaque 0.000000
+material change specular Opaque 0.500000
+material change diffuse Opaque 0.650000
+material change shininess Opaque 0.534020
+material change opacity Opaque 1.000000
+material change ambient Transparent 0.000000
+material change specular Transparent 0.500000
+material change diffuse Transparent 0.650000
+material change shininess Transparent 0.534020
+material change opacity Transparent 0.300000
+material add None
+material change ambient None 0.000000
+material change specular None 0.000000
+material change diffuse None 0.000000
+material change shininess None 0.000000
+material change opacity None 0.000000
+# Atom selection macros
+atomselect macro at {resname ADE A THY T}
+atomselect macro acidic {resname ASP GLU}
+atomselect macro cyclic {resname HIS PHE PRO TRP TYR}
+atomselect macro acyclic {protein and not cyclic}
+atomselect macro aliphatic {resname ALA GLY ILE LEU VAL}
+atomselect macro alpha {protein and name CA}
+atomselect macro amino protein
+atomselect macro aromatic {resname HIS PHE TRP TYR}
+atomselect macro basic {resname ARG HIS LYS HSP}
+atomselect macro bonded {numbonds > 0}
+atomselect macro buried {resname ALA LEU VAL ILE PHE CYS MET TRP}
+atomselect macro cg {resname CYT C GUA G}
+atomselect macro charged {basic or acidic}
+atomselect macro hetero {not (protein or nucleic)}
+atomselect macro hydrophobic {resname ALA LEU VAL ILE PRO PHE MET TRP}
+atomselect macro small {resname ALA GLY SER}
+atomselect macro medium {resname VAL THR ASP ASN PRO CYS ASX PCA HYP}
+atomselect macro large {protein and not (small or medium)}
+atomselect macro neutral {resname VAL PHE GLN TYR HIS CYS MET TRP ASX GLX PCA HYP}
+atomselect macro polar {protein and not hydrophobic}
+atomselect macro purine {resname ADE A GUA G}
+atomselect macro pyrimidine {resname CYT C THY T URI U}
+atomselect macro surface {protein and not buried}
+atomselect macro lipid {resname DLPE DMPC GPC LPPC PALM PC PGCL POPC POPE}
+atomselect macro lipids lipid
+atomselect macro ion {name CLA SOD}
+atomselect macro ions {name CLA SOD}
+atomselect macro sugar {resname AGLC}
+atomselect macro solvent {not (protein or sugar or nucleic or lipid)}
+atomselect macro carbon {name "C.*" and not ion}
+atomselect macro hydrogen {name "[0-9]?H.*"}
+atomselect macro nitrogen {name "N.*"}
+atomselect macro oxygen {name "O.*"}
+atomselect macro sulfur {name "S.*" and not ion}
+atomselect macro noh {not hydrogen}
+atomselect macro now {not water}
+atomselect macro hg {segname "CA_." and resid 3 to 58}
+atomselect macro mid {segname "CA_." and resid 62 to 157 294 to 320}
+atomselect macro bot {segname "CA_." and resid 163 to 290 322 to 329}
+atomselect macro tail {segname "CA_." and resid 323 to 354}
+atomselect macro tail_conn {segname "CA_." and resid 328 to 331}
+atomselect macro hg_conn {segname "CA_." and resid 57 to 63}
+atomselect macro hg_hydrophobic_core {segname "CA_." and resid 52 to 57}
+atomselect macro dna {segname "DNA." and resid 4 to 19}
+atomselect macro dna_int {segname "DNA." and resid 11 12}
+atomselect macro bc {(segname DNA1 DNA3 and resid 4) or (segname DNA2 DNA4 and resid 19)}
+atomselect macro hg_ref {name CA and chain A B and resid 3 to 57 and noh}
+atomselect macro hg_comp {name CA and segname CA_1 CA_2 and resid 3 to 57 and noh}
+atomselect macro dna_ref {nucleic and backbone and resid 6 to 17}
+atomselect macro dna_comp {segname DNA1 DNA2 and backbone and resid 6 to 17}
+atomselect macro bot_ref {chain A B and resid 163 to 290 322 to 329}
+atomselect macro bot_comp {segname CA_1 CA_2 and resid 163 to 290 322 to 329 and not hydrogen}
+atomselect macro mid_ref {chain A B and resid 62 to 157 294 to 320}
+atomselect macro mid_comp {segname CA_1 CA_2 and resid 62 to 157 294 to 320 and not hydrogen}
+atomselect macro hg_conn_ref {name CA and chain A B and resid 57 to 63}
+atomselect macro hg_conn_comp {name CA and segname CA_1 CA_2 and resid 57 to 63}
+atomselect macro align_helix {segname "CA_." and resid 103 to 118}
+atomselect macro ref {name CA and chain A B}
+atomselect macro comp {name CA and segname CA_1 CA_2}
+atomselect macro efa_ca_c {name CA and chain A B and resid 30 to 300}
+atomselect macro efa_ca_r {name CA and segname CA_1 CA_2 and resid 30 to 300}
+atomselect macro efa_hg_c {name CA and chain A B and resid 3 to 58}
+atomselect macro efa_hg_r {name CA and segname CA_1 CA_2 and resid 3 to 58}
+atomselect macro efa_mid_c {name CA and chain A B and resid 62 to 157 294 to 320}
+atomselect macro efa_mid_r {name CA and segname CA_1 CA_2 and resid 62 to 157 294 to 320}
+atomselect macro efa_mid-all_c {noh  and chain A B and resid 62 to 157 294 to 320}
+atomselect macro efa_mid-all_r {noh  and segname CA_1 CA_2 and resid 62 to 157 294 to 320}
+atomselect macro lbi_mid_c {name CA and resid 62 to 157 294 to 320}
+atomselect macro lbi_mid_r {name CA and resid 62 to 157 294 to 320}
+atomselect macro lbi_bot_c {name CA and resid 163 to 290 322 to 329}
+atomselect macro lbi_bot_r {name CA and resid 163 to 290 322 to 329}
+atomselect macro lbi_c {lbi_mid_c or lbi_bot_c}
+atomselect macro lbi_r {lbi_mid_r or lbi_bot_r}
+atomselect macro lbg_mid_c {name CA and resid 62 to 157 294 to 320}
+atomselect macro lbg_mid_r {name CA and resid 62 to 157 294 to 320}
+atomselect macro lbg_bot_c {name CA and resid 163 to 290 322 to 329}
+atomselect macro lbg_bot_r {name CA and resid 163 to 290 322 to 329}
+atomselect macro lbg_hg_c {name CA and resid 3 to 58}
+atomselect macro lbg_hg_r {name CA and resid 3 to 58}
+atomselect macro lbg_c {name CA}
+atomselect macro lbg_r {name CA}
+# Display settings
+display eyesep       0.065000
+display focallength  2.000000
+display height       6.000000
+display distance     -2.000000
+display projection   Orthographic
+display nearclip set 0.010000
+display farclip  set 10.000000
+display depthcue   off
+display cuestart   0.500000
+display cueend     10.000000
+display cuedensity 0.400000
+display cuemode    Exp2
+mol new model.pdb type pdb waitfor all
+graphics top sphere {0.000000 0.400000 0.000000} radius 0.100000 resolution 30
+graphics top sphere {3.000000 0.000000 0.400000} radius 0.100000 resolution 30
+graphics top sphere {3.000000 0.000000 -0.400000} radius 0.100000 resolution 30
+mol delrep 0 top
+mol representation CPK 1.000000 0.300000 103.000000 101.000000
+mol color Name
+mol selection {all}
+mol material Opaque
+mol addrep top
+mol selupdate 0 top 0
+mol colupdate 0 top 0
+mol scaleminmax top 0 0.000000 0.000000
+mol smoothrep top 0 0
+mol drawframes top 0 {now}
+mol rename top model.pdb
+set viewpoints([molinfo top]) {{{1.000000 0.000000 0.000000 -1.500000} {0.000000 1.000000 0.000000 -0.400000} {0.000000 0.000000 1.000000 0.000000} {0.000000 0.000000 0.000000 1.000000}} {{1.000000 0.000000 0.000000 0.000000} {0.000000 1.000000 0.000000 0.000000} {0.000000 0.000000 1.000000 0.000000} {0.000000 0.000000 0.000000 1.000000}} {{0.637639 0.000000 0.000000 0.000000} {0.000000 0.637639 0.000000 0.000000} {0.000000 0.000000 0.637639 0.000000} {0.000000 0.000000 0.000000 1.000000}} {{1.000000 0.000000 0.000000 0.000000} {0.000000 1.000000 0.000000 0.000000} {0.000000 0.000000 1.000000 0.000000} {0.000000 0.000000 0.000000 1.000000}}}
+lappend viewplist [molinfo top]
+set topmol [molinfo top]
+# done with molecule 1
+foreach v $viewplist {
+  molinfo $v set {center_matrix rotate_matrix scale_matrix global_matrix} $viewpoints($v)
+}
+foreach v $fixedlist {
+  molinfo $v set fixed 1
+}
+unset viewplist
+unset fixedlist
+mol top $topmol
+unset topmol
+proc vmdrestoremycolors {} {
+  color scale method RGB
+  color Display {Background} white
+  color Display {FPS} white
+  color Chain {W} blue
+  color Segname {W} blue
+  color Molecule {0} blue
+  color Molecule {1} red
+  color Surface {Grasp} gray
+  color Labels {Springs} orange
+  color change rgb 0 0.0 0.0 1.0
+  color change rgb 2 0.34999999404 0.34999999404 0.34999999404
+  color change rgb 3 1.0 0.5 0.0
+  color change rgb 4 1.0 1.0 0.0
+  color change rgb 5 0.5 0.5 0.20000000298
+  color change rgb 6 0.600000023842 0.600000023842 0.600000023842
+  color change rgb 7 0.0 1.0 0.0
+  color change rgb 9 1.0 0.600000023842 0.600000023842
+  color change rgb 11 0.649999976158 0.0 0.649999976158
+  color change rgb 12 0.5 0.899999976158 0.40000000596
+  color change rgb 13 0.899999976158 0.40000000596 0.699999988079
+  color change rgb 14 0.5 0.300000011921 0.0
+  color change rgb 15 0.5 0.5 0.75
+}
+vmdrestoremycolors
